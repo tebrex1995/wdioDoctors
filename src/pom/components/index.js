@@ -3,5 +3,12 @@ const SideMenu = require('./common/sideMenu.component');
 
 const AddDoctorModal = require('./doctors/add-doctor-component');
 const ListHeaderComponent = require('./doctors/list-header-components');
+const SpecialistCardComponent = require('./doctors/specialist-card.component');
 
-module.exports = { Headers, SideMenu, AddDoctorModal, ListHeaderComponent };
+module.exports = {
+  Headers,
+  SideMenu,
+  AddDoctorModal,
+  ListHeaderComponent,
+  SpecialistCardComponent,
+};

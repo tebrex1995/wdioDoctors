@@ -18,34 +18,37 @@ describe('Doctors page', () => {
 
     await expect(pages('doctors').addDoctorModal.rootEl).toBeDisplayed();
   });
+
   it('Add a new doctor', async () => {
     await pages('dashboard').sideMenu.item('doctors').click();
 
     await pages('doctors').doctorListHeader.addNewDoctorBtn.click();
 
-    await $('[name="Name"]').setValue('John Doe');
-    await $('#DoctorMobile').setValue('11111111111');
-    await $('[name = "Email"]').setValue('test@email.com');
-    await $('[name = "Education"]').setValue('Basic');
-    await $('[name = "Designation"]').setValue('test');
+    await pages('doctors').addDoctorModal.input('name').setValue('John Doe');
+    await pages('doctors')
+      .addDoctorModal.input('phone')
+      .setValue('11111111111');
+    await pages('doctors')
+      .addDoctorModal.input('email')
+      .setValue('test@email.com');
+    await pages('doctors').addDoctorModal.input('education').setValue('Basic');
+    await pages('doctors').addDoctorModal.input('designation').setValue('test');
 
-    await $('.e-footer-content button.e-primary').click();
+    await pages('doctors').addDoctorModal.saveBtn.click();
 
     await expect(pages('doctors').addDoctorModal.rootEl).not.toBeDisplayed();
 
-    expect($('$Specialist_8').$('.name').toHaveText('John Doe'));
-    expect(
-      $('$Specialist_8')
-        .$('.education')
-        .toHaveText('Basc', { ignoreCase: true })
-    );
+    expect(pages('doctors').specialistCart(8).name).toHaveText('John Doe');
+    expect(pages('doctors').specialistCart(8).education).toHaveText('Basc', {
+      ignoreCase: true,
+    });
   });
 
   it('Close a modal window for adding a new docot', async () => {
     await pages('dashboard').sideMenu.item('doctors').click();
 
     await pages('doctors').doctorListHeader.addNewDoctorBtn.click();
-    await $('.new-doctor-dialog .e-dlg-closeicon-btn').click();
+    await pages('doctors').addDoctorModal.closeBtn.click();
     await expect(pages('doctors').addDoctorModal.rootEl).not.toBeDisplayed();
   });
 });
